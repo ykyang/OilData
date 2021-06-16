@@ -22,3 +22,13 @@ or
 ```julia
 include("runtests.jl")
 ```
+
+or
+
+```julia
+include("dev/OilData/test/runtests.jl")
+```
+
+## Develop
+Write code in `dev/OilData` and interact, test with `run_****.jl`.  Port
+what is in `run_****.jl` to `dev/OilData/test/test_****.jl`.
