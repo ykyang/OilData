@@ -1,5 +1,6 @@
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 OilData = "ed55d250-9399-4b64-848e-cd98e165462d"
+ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 TerminalPager = "0c614874-6106-40ed-a7c2-2f1cd0bff883"
