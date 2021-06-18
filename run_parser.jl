@@ -130,35 +130,18 @@ function learn_progress_meter()
         pos = 0
         while !done[]
             open(path, "r") do io
-                #skip(io, pos)
-                seek(io,pos)
-                for line in eachline(io)
-                    if !startswith(line, "SECTION")
-                        continue
-                    end
-                    if startswith(line, "SECTION  Simulation complete.")
-                        Threads.atomic_or!(done, true)
-                    end
-                    if length(line) < 48
-                        continue
-                    end
-
-                    if startswith(line, "SECTION  The simulation has reached")
-                        # SECTION  Starting the simulation on 18-Jan-2020
-                        # SECTION  The simulation has reached 26-Jan-2021 374 d. ...
-                        # SECTION  Simulation complete.
-                        tokens = split(line, [' '], keepempty = false)
-                        token = tokens[6]
-                        datetime = DateTime(token, dateformat"d-u-Y")
-                        days = convert(Day, datetime - start_datetime)
-                        #@show days
-                        update!(progress, days.value)
+                try
+                    datetime = find_prt_current_date(io, pos)
+                    pos = position(io)
+                    days = convert(Day, datetime - start_datetime)
+                    update!(progress, days.value)
+                catch e
+                    if e isa ErrorException
+                        # ignore
                     end
                 end
-
-                pos = position(io)
             end
-            sleep(0.001)      
+            sleep(0.5)      
         end
 
         finish!(progress)
